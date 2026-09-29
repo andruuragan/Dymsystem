@@ -60,14 +60,7 @@ public class CartAdapter
                 product.getName()
         );
 
-        String specs =
-                "Ø" + product.getDiameter()
-                        + " • "
-                        + product.getThickness()
-                        + " • AISI "
-                        + product.getGrade();
 
-        holder.textProductSpecs.setText(specs);
 
         holder.textProductPrice.setText(
                 String.format(
@@ -168,7 +161,7 @@ public class CartAdapter
             extends RecyclerView.ViewHolder {
 
         TextView textProductName;
-        TextView textProductSpecs;
+
         TextView textProductPrice;
         TextView textQuantity;
         TextView textItemTotal;
@@ -188,10 +181,9 @@ public class CartAdapter
                             R.id.textCartProductName
                     );
 
-            textProductSpecs =
-                    itemView.findViewById(
-                            R.id.textCartProductSpecs
-                    );
+
+
+
 
             textProductPrice =
                     itemView.findViewById(

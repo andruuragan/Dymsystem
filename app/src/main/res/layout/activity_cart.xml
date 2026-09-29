@@ -66,6 +66,19 @@
             android:paddingEnd="12dp"
             android:textSize="14sp" />
 
+        <EditText
+            android:id="@+id/editCartInvoiceName"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="8dp"
+            android:hint="Название накладной (необязательно)"
+            android:inputType="textCapSentences"
+            android:maxLines="1"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:textSize="14sp" />
+
+
         <!-- Итоговая сумма -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -98,40 +111,54 @@
 
         </LinearLayout>
 
-        <!-- Добавить товар -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonAddCartProduct"
+        <!-- Нижние действия -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="56dp"
             android:layout_marginTop="8dp"
-            android:text="ДОБАВИТЬ ТОВАР"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            app:cornerRadius="24dp" />
+            android:gravity="center"
+            android:orientation="horizontal">
 
-        <!-- Очистить -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonClearCart"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="6dp"
-            android:text="ОЧИСТИТЬ НАКЛАДНУЮ"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            app:cornerRadius="24dp"
-            style="@style/Widget.Material3.Button.OutlinedButton" />
+            <!-- Добавить товар -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonAddCartProduct"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text="+"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:contentDescription="Добавить товар"
+                app:cornerRadius="24dp" />
 
-        <!-- Сохранить -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonSaveCart"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_marginTop="10dp"
-            android:text="СОХРАНИТЬ"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:cornerRadius="26dp" />
+            <!-- Очистить -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonClearCart"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:text="×"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:contentDescription="Очистить накладную"
+                app:cornerRadius="24dp"
+                style="@style/Widget.Material3.Button.OutlinedButton" />
 
+            <!-- Сохранить -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonSaveCart"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:text="✓"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:contentDescription="Сохранить"
+                app:cornerRadius="24dp" />
+
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

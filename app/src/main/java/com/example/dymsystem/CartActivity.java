@@ -43,6 +43,7 @@ public class CartActivity extends AppCompatActivity {
 
     private CartAdapter cartAdapter;
     private EditText editCartDiscount;
+    private EditText editCartInvoiceName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +61,9 @@ public class CartActivity extends AppCompatActivity {
                 findViewById(R.id.textCartTotal);
         editCartDiscount =
                 findViewById(R.id.editCartDiscount);
+
+        editCartInvoiceName =
+                findViewById(R.id.editCartInvoiceName);
 
         editCartDiscount.addTextChangedListener(
                 new TextWatcher() {
@@ -164,7 +168,7 @@ public class CartActivity extends AppCompatActivity {
 
             if (invoiceId != -1) {
 
-                saveInvoiceToExcel();
+                saveInvoiceToExcel(invoiceId);
 
                 Toast.makeText(
                         this,
@@ -273,6 +277,10 @@ public class CartActivity extends AppCompatActivity {
 
         String client =
                 editCartClient.getText().toString().trim();
+        String invoiceName =
+                editCartInvoiceName.getText()
+                        .toString()
+                        .trim();
 
         String createdAt =
                 new SimpleDateFormat(
@@ -309,6 +317,17 @@ public class CartActivity extends AppCompatActivity {
                         client
                 );
             }
+
+            if (invoiceName.isEmpty()) {
+                invoiceValues.putNull("name");
+            } else {
+                invoiceValues.put(
+                        "name",
+                        invoiceName
+                );
+            }
+
+
 
             invoiceValues.put(
                     "discount",
@@ -387,8 +406,7 @@ public class CartActivity extends AppCompatActivity {
         return invoiceId;
     }
 
-    private void saveInvoiceToExcel() {
-
+    private void saveInvoiceToExcel(long invoiceId) {
         try {
 
             CartManager cartManager =
@@ -403,12 +421,24 @@ public class CartActivity extends AppCompatActivity {
                 return;
             }
 
+            String invoiceName =
+                    editCartInvoiceName.getText()
+                            .toString()
+                            .trim();
+
+            if (invoiceName.isEmpty()) {
+                invoiceName = "Накладная";
+            }
+
+// Убираем символы, которые нельзя использовать в имени файла
+            invoiceName = invoiceName.replaceAll(
+                    "[\\\\/:*?\"<>|]",
+                    "_"
+            );
+
             String fileName =
-                    "Invoice_" +
-                            new SimpleDateFormat(
-                                    "yyyyMMdd_HHmm",
-                                    Locale.getDefault()
-                            ).format(new Date()) +
+                    invoiceId + "_" +
+                            invoiceName +
                             ".xlsx";
 
             // Папка Documents

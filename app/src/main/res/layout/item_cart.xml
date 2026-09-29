@@ -46,15 +46,7 @@
 
         </LinearLayout>
 
-        <!-- Характеристики -->
-        <TextView
-            android:id="@+id/textCartProductSpecs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:text="Ø100 • 0,5 мм • AISI 201"
-            android:textColor="#757575"
-            android:textSize="12sp" />
+
 
         <!-- Цена + количество + сумма -->
         <LinearLayout

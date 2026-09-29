@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class InvoiceDbHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "invoices.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     public InvoiceDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -22,6 +22,7 @@ public class InvoiceDbHelper extends SQLiteOpenHelper {
                         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         "created_at TEXT NOT NULL, " +
                         "client TEXT, " +
+                        "name TEXT, " +
                         "discount REAL NOT NULL DEFAULT 0, " +
                         "subtotal REAL NOT NULL, " +
                         "total REAL NOT NULL" +
@@ -49,6 +50,10 @@ public class InvoiceDbHelper extends SQLiteOpenHelper {
             int oldVersion,
             int newVersion
     ) {
-        // Пока обновлений структуры нет.
+        if (oldVersion < 2) {
+            db.execSQL(
+                    "ALTER TABLE invoices ADD COLUMN name TEXT"
+            );
+        }
     }
 }
