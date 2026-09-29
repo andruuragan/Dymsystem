@@ -85,7 +85,7 @@ public class ClientDetailsActivity extends AppCompatActivity {
                         R.id.textDetailNote
                 );
 
-        textTitle.setText(client.getName());
+        textTitle.setText("Информация о клиенте");
 
         textName.setText(
                 "Имя: " + client.getName()
@@ -343,6 +343,15 @@ public class ClientDetailsActivity extends AppCompatActivity {
         }
 
         return value;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (client != null) {
+            loadClientInvoices();
+        }
     }
     @Override
     protected void onDestroy() {
