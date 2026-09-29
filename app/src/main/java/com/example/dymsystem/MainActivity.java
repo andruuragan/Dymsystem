@@ -30,6 +30,17 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        // Открываем клиентов
+        findViewById(R.id.cardClients).setOnClickListener(v -> {
+
+            Intent intent = new Intent(
+                    MainActivity.this,
+                    ClientsActivity.class
+            );
+
+            startActivity(intent);
+        });
+
         ViewCompat.setOnApplyWindowInsetsListener(
                 findViewById(R.id.main),
                 (v, insets) -> {

@@ -1,0 +1,248 @@
+package com.example.dymsystem;
+
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+public class InvoiceAdapter
+        extends RecyclerView.Adapter<InvoiceAdapter.InvoiceViewHolder> {
+
+    public interface OnInvoiceDeleteListener {
+        void onDeleteInvoice(long invoiceId);
+    }
+
+    private final Cursor cursor;
+    private final Context context;
+    private final OnInvoiceDeleteListener deleteListener;
+
+    public InvoiceAdapter(
+            Context context,
+            Cursor cursor
+    ) {
+        this(
+                context,
+                cursor,
+                null
+        );
+    }
+
+    public InvoiceAdapter(
+            Context context,
+            Cursor cursor,
+            OnInvoiceDeleteListener deleteListener
+    ) {
+        this.context = context;
+        this.cursor = cursor;
+        this.deleteListener = deleteListener;
+    }
+
+    @NonNull
+    @Override
+    public InvoiceViewHolder onCreateViewHolder(
+            @NonNull ViewGroup parent,
+            int viewType
+    ) {
+
+        View view = LayoutInflater.from(
+                parent.getContext()
+        ).inflate(
+                R.layout.item_invoice,
+                parent,
+                false
+        );
+
+        return new InvoiceViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(
+            @NonNull InvoiceViewHolder holder,
+            int position
+    ) {
+
+        if (!cursor.moveToPosition(position)) {
+            return;
+        }
+
+        long id = cursor.getLong(
+                cursor.getColumnIndexOrThrow("id")
+        );
+
+        String createdAt = cursor.getString(
+                cursor.getColumnIndexOrThrow("created_at")
+        );
+
+        String name = cursor.getString(
+                cursor.getColumnIndexOrThrow("name")
+        );
+
+        double total = cursor.getDouble(
+                cursor.getColumnIndexOrThrow("total")
+        );
+
+        holder.textInvoiceId.setText(
+                "Накладная №" + id
+        );
+
+        holder.textInvoiceDate.setText(
+                formatDate(createdAt)
+        );
+
+        if (name == null || name.isEmpty()) {
+            holder.textInvoiceName.setVisibility(View.GONE);
+        } else {
+            holder.textInvoiceName.setVisibility(View.VISIBLE);
+            holder.textInvoiceName.setText(name);
+        }
+
+        holder.textInvoiceTotal.setText(
+                String.format(
+                        java.util.Locale.getDefault(),
+                        "%.2f грн",
+                        total
+                )
+        );
+
+        // Открытие накладной
+        holder.itemView.setOnClickListener(v -> {
+
+            Intent intent = new Intent(
+                    context,
+                    InvoiceDetailsActivity.class
+            );
+
+            intent.putExtra(
+                    "invoice_id",
+                    id
+            );
+
+            context.startActivity(intent);
+        });
+
+        // Кнопка удаления
+        if (deleteListener == null) {
+
+            holder.buttonDeleteInvoice.setVisibility(
+                    View.GONE
+            );
+
+            holder.buttonDeleteInvoice.setOnClickListener(
+                    null
+            );
+
+        } else {
+
+            holder.buttonDeleteInvoice.setVisibility(
+                    View.VISIBLE
+            );
+
+            holder.buttonDeleteInvoice.setOnClickListener(v -> {
+
+                new androidx.appcompat.app.AlertDialog.Builder(context)
+                        .setTitle("Удалить накладную?")
+                        .setMessage(
+                                "Накладная №" +
+                                        id +
+                                        "\n\nЭто действие нельзя отменить."
+                        )
+                        .setNegativeButton(
+                                "Отмена",
+                                null
+                        )
+                        .setPositiveButton(
+                                "Удалить",
+                                (dialog, which) -> {
+
+                                    deleteListener.onDeleteInvoice(
+                                            id
+                                    );
+                                }
+                        )
+                        .show();
+            });
+        }
+    }
+
+    @Override
+    public int getItemCount() {
+        return cursor.getCount();
+    }
+
+    private String formatDate(String dateTime) {
+
+        if (dateTime == null || dateTime.isEmpty()) {
+            return "";
+        }
+
+        if (dateTime.length() >= 10) {
+
+            String date = dateTime.substring(
+                    0,
+                    10
+            );
+
+            String[] parts = date.split("-");
+
+            if (parts.length == 3) {
+
+                return parts[2] +
+                        "." +
+                        parts[1] +
+                        "." +
+                        parts[0];
+            }
+        }
+
+        return dateTime;
+    }
+
+    static class InvoiceViewHolder
+            extends RecyclerView.ViewHolder {
+
+        TextView textInvoiceId;
+        TextView textInvoiceDate;
+        TextView textInvoiceName;
+        TextView textInvoiceTotal;
+
+        ImageButton buttonDeleteInvoice;
+
+        public InvoiceViewHolder(
+                @NonNull View itemView
+        ) {
+            super(itemView);
+
+            textInvoiceId =
+                    itemView.findViewById(
+                            R.id.textInvoiceId
+                    );
+
+            textInvoiceDate =
+                    itemView.findViewById(
+                            R.id.textInvoiceDate
+                    );
+
+            textInvoiceName =
+                    itemView.findViewById(
+                            R.id.textInvoiceName
+                    );
+
+            textInvoiceTotal =
+                    itemView.findViewById(
+                            R.id.textInvoiceTotal
+                    );
+
+            buttonDeleteInvoice =
+                    itemView.findViewById(
+                            R.id.buttonDeleteInvoice
+                    );
+        }
+    }
+}

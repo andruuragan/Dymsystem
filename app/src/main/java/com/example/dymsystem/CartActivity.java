@@ -344,11 +344,42 @@ public class CartActivity extends AppCompatActivity {
                     total
             );
 
+
+
+// Если клиент указан — добавляем его в таблицу clients,
+// если такого клиента там ещё нет
+            if (!client.isEmpty()) {
+
+                ContentValues clientValues =
+                        new ContentValues();
+
+                clientValues.put(
+                        "name",
+                        client
+                );
+
+                clientValues.put(
+                        "created_at",
+                        createdAt
+                );
+
+                db.insertWithOnConflict(
+                        "clients",
+                        null,
+                        clientValues,
+                        SQLiteDatabase.CONFLICT_IGNORE
+                );
+            }
+
+// Создаём накладную
             invoiceId = db.insertOrThrow(
                     "invoices",
                     null,
                     invoiceValues
             );
+
+
+
 
             // Добавляем товары
             for (CartItem item : cartManager.getItems()) {

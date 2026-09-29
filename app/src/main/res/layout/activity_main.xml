@@ -104,6 +104,7 @@
             android:useDefaultMargins="false">
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardClients"
                 android:layout_width="0dp"
                 android:layout_height="130dp"
                 android:layout_columnWeight="1"

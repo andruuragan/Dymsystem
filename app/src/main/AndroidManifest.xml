@@ -18,6 +18,21 @@
         <activity
             android:name=".CartActivity"
             android:exported="false" />
+        <activity
+            android:name=".ClientsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddClientActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ClientDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UnassignedInvoicesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".InvoiceDetailsActivity"
+            android:exported="false" />
 
         <activity
             android:name=".MainActivity"

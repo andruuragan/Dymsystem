@@ -15,6 +15,9 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.content.Intent;
 import android.widget.ImageButton;
+import android.view.View;
+
+import android.app.Activity;
 
 public class ProductSelectionActivity extends AppCompatActivity {
 
@@ -22,16 +25,31 @@ public class ProductSelectionActivity extends AppCompatActivity {
     private MaterialButton buttonCart;
     private List<Product> allProducts;
     private ProductAdapter productAdapter;
+    private boolean invoiceEditMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_selection);
+        invoiceEditMode =
+                getIntent().getBooleanExtra(
+                        "invoice_edit_mode",
+                        false
+                );
 
         ImageButton buttonBackToMain =
                 findViewById(R.id.buttonBackToMain);
 
         buttonBackToMain.setOnClickListener(v -> {
+
+            if (invoiceEditMode) {
+
+                setResult(RESULT_CANCELED);
+
+                finish();
+
+                return;
+            }
 
             Intent intent = new Intent(
                     ProductSelectionActivity.this,
@@ -46,9 +64,11 @@ public class ProductSelectionActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-
         recyclerProducts = findViewById(R.id.recyclerProducts);
         buttonCart = findViewById(R.id.buttonCart);
+        if (invoiceEditMode) {
+            buttonCart.setVisibility(View.GONE);
+        }
         buttonCart.setOnClickListener(v -> {
 
             Intent intent = new Intent(
@@ -78,6 +98,47 @@ public class ProductSelectionActivity extends AppCompatActivity {
                 new java.util.ArrayList<>(allProducts),
                 (product, quantity, imageView) -> {
 
+                    if (invoiceEditMode) {
+
+
+
+
+                            Intent resultIntent =
+                                    new Intent();
+
+
+
+                        resultIntent.putExtra(
+                                "product_id",
+                                product.getId()
+                        );
+
+                        resultIntent.putExtra(
+                                "product_name",
+                                product.getName()
+                        );
+
+                        resultIntent.putExtra(
+                                "product_price",
+                                product.getPrice()
+                        );
+
+                        resultIntent.putExtra(
+                                "product_quantity",
+                                quantity
+                        );
+
+                        setResult(
+                                Activity.RESULT_OK,
+                                resultIntent
+                        );
+
+                        finish();
+
+                        return;
+                    }
+
+                    // Обычный режим корзины
                     CartManager.getInstance().addProduct(
                             product,
                             quantity
