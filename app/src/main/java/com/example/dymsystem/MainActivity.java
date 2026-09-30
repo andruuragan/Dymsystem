@@ -67,6 +67,14 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        findViewById(R.id.cardCatalog).setOnClickListener(v -> {
+            Intent intent = new Intent(
+                    MainActivity.this,
+                    ProductSelectionActivity.class
+            );
+            startActivity(intent);
+        });
+
         ViewCompat.setOnApplyWindowInsetsListener(
                 findViewById(R.id.main),
                 (v, insets) -> {
