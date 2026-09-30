@@ -189,11 +189,11 @@ public class ProductSelectionActivity extends AppCompatActivity {
 
         float endX = endLocation[0]
                 + buttonCart.getWidth() / 2f
-                - 60;
+                - 95;
 
         float endY = endLocation[1]
                 + buttonCart.getHeight() / 2f
-                - 60;
+                - 95;
 
         flyingImage.setX(startX);
         flyingImage.setY(startY);
@@ -204,7 +204,7 @@ public class ProductSelectionActivity extends AppCompatActivity {
                 .scaleX(0.2f)
                 .scaleY(0.2f)
                 .alpha(0f)
-                .setDuration(500)
+                .setDuration(800)
                 .withEndAction(() -> {
 
                     root.removeView(flyingImage);

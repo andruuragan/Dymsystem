@@ -33,6 +33,9 @@
         <activity
             android:name=".InvoiceDetailsActivity"
             android:exported="false" />
+        <activity
+            android:name=".InvoicesActivity"
+            android:exported="false" />
 
         <activity
             android:name=".MainActivity"

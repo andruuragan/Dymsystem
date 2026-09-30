@@ -22,7 +22,7 @@ public class InvoiceAdapter
     private final Cursor cursor;
     private final Context context;
     private final OnInvoiceDeleteListener deleteListener;
-
+    private final boolean showClientName;
     public InvoiceAdapter(
             Context context,
             Cursor cursor
@@ -30,7 +30,8 @@ public class InvoiceAdapter
         this(
                 context,
                 cursor,
-                null
+                null,
+                false
         );
     }
 
@@ -39,9 +40,24 @@ public class InvoiceAdapter
             Cursor cursor,
             OnInvoiceDeleteListener deleteListener
     ) {
+        this(
+                context,
+                cursor,
+                deleteListener,
+                false
+        );
+    }
+
+    public InvoiceAdapter(
+            Context context,
+            Cursor cursor,
+            OnInvoiceDeleteListener deleteListener,
+            boolean showClientName
+    ) {
         this.context = context;
         this.cursor = cursor;
         this.deleteListener = deleteListener;
+        this.showClientName = showClientName;
     }
 
     @NonNull
@@ -84,13 +100,35 @@ public class InvoiceAdapter
                 cursor.getColumnIndexOrThrow("name")
         );
 
+        String client = cursor.getString(
+                cursor.getColumnIndexOrThrow("client")
+        );
+
         double total = cursor.getDouble(
                 cursor.getColumnIndexOrThrow("total")
         );
 
-        holder.textInvoiceId.setText(
-                "Накладная №" + id
-        );
+        if (showClientName) {
+
+            String clientLabel =
+                    (client == null || client.isEmpty())
+                            ? "Без клиента"
+                            : client;
+
+            holder.textInvoiceId.setText(
+                    "Накладная №" +
+                            id +
+                            " (" +
+                            clientLabel +
+                            ")"
+            );
+
+        } else {
+
+            holder.textInvoiceId.setText(
+                    "Накладная №" + id
+            );
+        }
 
         holder.textInvoiceDate.setText(
                 formatDate(createdAt)

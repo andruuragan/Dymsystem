@@ -270,4 +270,20 @@ public class InvoiceDbHelper extends SQLiteOpenHelper {
         );
     }
 
+    public Cursor getLatestInvoices() {
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        return db.query(
+                "invoices",
+                null,
+                null,
+                null,
+                null,
+                null,
+                "created_at DESC",
+                "5"
+        );
+    }
+
 }
