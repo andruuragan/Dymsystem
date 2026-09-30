@@ -42,6 +42,16 @@
                 android:textColor="#757575" />
 
             <ImageButton
+                android:id="@+id/buttonShareInvoice"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="4dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Поделиться накладной"
+                android:padding="8dp"
+                android:src="@drawable/ic_share" />
+
+            <ImageButton
                 android:id="@+id/buttonDeleteInvoice"
                 android:layout_width="40dp"
                 android:layout_height="40dp"

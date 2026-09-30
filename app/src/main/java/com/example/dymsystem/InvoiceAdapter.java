@@ -165,6 +165,61 @@ public class InvoiceAdapter
             context.startActivity(intent);
         });
 
+        // Кнопка "Поделиться"
+        holder.buttonShareInvoice.setOnClickListener(v -> {
+
+            try {
+
+                java.io.File file =
+                        InvoiceExcelExporter.export(
+                                context,
+                                id
+                        );
+
+                android.net.Uri uri =
+                        androidx.core.content.FileProvider.getUriForFile(
+                                context,
+                                context.getPackageName() + ".fileprovider",
+                                file
+                        );
+
+                Intent shareIntent =
+                        new Intent(Intent.ACTION_SEND);
+
+                shareIntent.setType(
+                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                );
+
+                shareIntent.putExtra(
+                        Intent.EXTRA_STREAM,
+                        uri
+                );
+
+                shareIntent.addFlags(
+                        Intent.FLAG_GRANT_READ_URI_PERMISSION
+                );
+
+                Intent chooser =
+                        Intent.createChooser(
+                                shareIntent,
+                                "Поделиться накладной"
+                        );
+
+                context.startActivity(chooser);
+
+            } catch (Exception e) {
+
+                android.widget.Toast.makeText(
+                        context,
+                        "Ошибка создания Excel: " + e.getMessage(),
+                        android.widget.Toast.LENGTH_LONG
+                ).show();
+            }
+
+        });
+
+
+
         // Кнопка удаления
         if (deleteListener == null) {
 
@@ -249,6 +304,7 @@ public class InvoiceAdapter
         TextView textInvoiceDate;
         TextView textInvoiceName;
         TextView textInvoiceTotal;
+        ImageButton buttonShareInvoice;
 
         ImageButton buttonDeleteInvoice;
 
@@ -276,6 +332,11 @@ public class InvoiceAdapter
                     itemView.findViewById(
                             R.id.textInvoiceTotal
                     );
+            buttonShareInvoice =
+                    itemView.findViewById(
+                            R.id.buttonShareInvoice
+                    );
+
 
             buttonDeleteInvoice =
                     itemView.findViewById(
