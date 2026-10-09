@@ -26,6 +26,13 @@ public class ProductSelectionActivity extends AppCompatActivity {
     private List<Product> allProducts;
     private ProductAdapter productAdapter;
     private boolean invoiceEditMode;
+    // Збережені параметри фільтра протягом роботи Activity
+    private String selectedChimneyType = "Все";
+    private String selectedGrade = "Все";
+    private String selectedThickness = "Все";
+    private String selectedCasing = "Все";
+    private String selectedDiameter = "Все";
+    private String selectedType = "Все";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -212,6 +219,7 @@ public class ProductSelectionActivity extends AppCompatActivity {
                 })
                 .start();
     }
+
     private void showFilterDialog() {
 
         Dialog dialog = new Dialog(this);
@@ -225,116 +233,94 @@ public class ProductSelectionActivity extends AppCompatActivity {
         Spinner spinnerFilter5 = dialog.findViewById(R.id.spinnerFilter5);
         Spinner spinnerFilter6 = dialog.findViewById(R.id.spinnerFilter6);
 
-        setSpinner(
-                spinnerFilter1,
-                new String[]{
-                        "Все",
-                        "Термо",
-                        "Одностінний"
-                }
-        );
+        setSpinner(spinnerFilter1, new String[]{
+                "Все", "Термо", "Одностінний"
+        });
 
-        setSpinner(
-                spinnerFilter2,
-                new String[]{
-                        "Все",
-                        "304",
-                        "321",
-                        "201",
-                        "430"
-                }
-        );
+        setSpinner(spinnerFilter2, new String[]{
+                "Все", "304", "321", "201", "430"
+        });
 
-        setSpinner(
-                spinnerFilter3,
-                new String[]{
-                        "Все",
-                        "0,5 мм",
-                        "0,8 мм",
-                        "1 мм",
-                        "2 мм"
-                }
-        );
+        setSpinner(spinnerFilter3, new String[]{
+                "Все", "0,5 мм", "0,8 мм", "1 мм", "2 мм"
+        });
 
-        setSpinner(
-                spinnerFilter4,
-                new String[]{
-                        "Все",
-                        "н/н",
-                        "н/оц"
-                }
-        );
+        setSpinner(spinnerFilter4, new String[]{
+                "Все", "н/н", "н/оц"
+        });
 
-        setSpinner(
-                spinnerFilter5,
-                new String[]{
-                        "Все",
-                        "100", "110", "120", "125", "130", "140",
-                        "150", "160", "170", "180", "190", "200",
-                        "210", "220", "230", "240", "250", "260",
-                        "270", "280", "290", "300", "310", "320",
-                        "330", "350", "360", "370", "380", "400",
-                        "420", "450", "460", "500", "520", "860",
-                        "100/160", "110/180", "120/180", "130/200",
-                        "140/200", "150/220", "160/220", "180/250",
-                        "200/260", "220/280", "230/300", "250/320",
-                        "300/360", "350/420", "400/460", "500/560",
-                        "100/200", "120/220", "130/230", "140/240",
-                        "150/250", "160/260", "180/280", "200/300",
-                        "100х200", "110х220", "110х230", "110х240",
-                        "120х220", "120х230", "120х240"
-                }
-        );
+        setSpinner(spinnerFilter5, new String[]{
+                "Все",
+                "100", "110", "120", "125", "130", "140",
+                "150", "160", "170", "180", "190", "200",
+                "210", "220", "230", "240", "250", "260",
+                "270", "280", "290", "300", "310", "320",
+                "330", "350", "360", "370", "380", "400",
+                "420", "450", "460", "500", "520", "860",
+                "100/160", "110/180", "120/180", "130/200",
+                "140/200", "150/220", "160/220", "180/250",
+                "200/260", "220/280", "230/300", "250/320",
+                "300/360", "350/420", "400/460", "500/560",
+                "100/200", "120/220", "130/230", "140/240",
+                "150/250", "160/260", "180/280", "200/300",
+                "100х200", "110х220", "110х230", "110х240",
+                "120х220", "120х230", "120х240"
+        });
 
-        setSpinner(
-                spinnerFilter6,
-                new String[]{
-                        "Все",
-                        "Труба",
-                        "Коліно 45°",
-                        "Коліно 90°",
-                        "Трійник 90°",
-                        "Трійник 45°",
-                        "Волпер",
-                        "Грибок",
-                        "Іскрогасник",
-                        "Регулятор тяги(Кагла)",
-                        "Лійка",
-                        "Окапник",
-                        "Закінчення димоходу",
-                        "Перехід",
-                        "Радіатор",
-                        "Ревізія",
-                        "Розета",
-                        "Сітка",
-                        "Скоба",
-                        "Криза",
-                        "Кронштейн",
-                        "Розвантажувальна підставка",
-                        "Обжимний хомут",
-                        "Хомут під розтяжки",
-                        "Стіновий хомут",
-                        "Монтажний хомут",
-                        "Конус",
-                        "Термоґрибок",
-                        "Дека",
-                        "Заглушка",
-                        "Старт-сендвіч",
-                        "Труба-подовжувач",
-                        "Прохід",
-                        "Відображувач",
-                        "Труба овальна",
-                        "Трійник овальний 90°",
-                        "Трійник овальний 45°",
-                        "Коліно овальне 45°",
-                        "Коліно овальне 90°",
-                        "Закінчення димоходу овальне",
-                        "Перехід овальний",
-                        "Грибок овальний",
-                        "Лійка овальна",
-                        "Скоба овальна"
-                }
-        );
+        setSpinner(spinnerFilter6, new String[]{
+                "Все",
+                "Труба",
+                "Коліно 45°",
+                "Коліно 90°",
+                "Трійник 90°",
+                "Трійник 45°",
+                "Волпер",
+                "Грибок",
+                "Іскрогасник",
+                "Регулятор тяги(Кагла)",
+                "Лійка",
+                "Окапник",
+                "Закінчення димоходу",
+                "Перехід",
+                "Радіатор",
+                "Ревізія",
+                "Розета",
+                "Сітка",
+                "Скоба",
+                "Криза",
+                "Кронштейн",
+                "Розвантажувальна підставка",
+                "Обжимний хомут",
+                "Хомут під розтяжки",
+                "Стіновий хомут",
+                "Монтажний хомут",
+                "Конус",
+                "Термоґрибок",
+                "Дека",
+                "Заглушка",
+                "Старт-сендвіч",
+                "Труба-подовжувач",
+                "Прохід",
+                "Відображувач",
+                "Труба овальна",
+                "Трійник овальний 90°",
+                "Трійник овальний 45°",
+                "Коліно овальне 45°",
+                "Коліно овальне 90°",
+                "Закінчення димоходу овальне",
+                "Перехід овальний",
+                "Грибок овальний",
+                "Лійка овальна",
+                "Скоба овальна"
+        });
+
+        // Відновлюємо попередній вибір у кожному списку
+        setSpinnerSelection(spinnerFilter1, selectedChimneyType);
+        setSpinnerSelection(spinnerFilter2, selectedGrade);
+        setSpinnerSelection(spinnerFilter3, selectedThickness);
+        setSpinnerSelection(spinnerFilter4, selectedCasing);
+        setSpinnerSelection(spinnerFilter5, selectedDiameter);
+        setSpinnerSelection(spinnerFilter6, selectedType);
 
         Button btnApplyFilters =
                 dialog.findViewById(R.id.btnApplyFilters);
@@ -344,13 +330,32 @@ public class ProductSelectionActivity extends AppCompatActivity {
 
         btnApplyFilters.setOnClickListener(v -> {
 
+            // Зберігаємо вибрані значення
+            selectedChimneyType =
+                    spinnerFilter1.getSelectedItem().toString();
+
+            selectedGrade =
+                    spinnerFilter2.getSelectedItem().toString();
+
+            selectedThickness =
+                    spinnerFilter3.getSelectedItem().toString();
+
+            selectedCasing =
+                    spinnerFilter4.getSelectedItem().toString();
+
+            selectedDiameter =
+                    spinnerFilter5.getSelectedItem().toString();
+
+            selectedType =
+                    spinnerFilter6.getSelectedItem().toString();
+
             applyFilters(
-                    spinnerFilter1.getSelectedItem().toString(),
-                    spinnerFilter2.getSelectedItem().toString(),
-                    spinnerFilter3.getSelectedItem().toString(),
-                    spinnerFilter4.getSelectedItem().toString(),
-                    spinnerFilter5.getSelectedItem().toString(),
-                    spinnerFilter6.getSelectedItem().toString()
+                    selectedChimneyType,
+                    selectedGrade,
+                    selectedThickness,
+                    selectedCasing,
+                    selectedDiameter,
+                    selectedType
             );
 
             dialog.dismiss();
@@ -358,6 +363,15 @@ public class ProductSelectionActivity extends AppCompatActivity {
 
         btnResetFilters.setOnClickListener(v -> {
 
+            // Скидаємо збережені значення
+            selectedChimneyType = "Все";
+            selectedGrade = "Все";
+            selectedThickness = "Все";
+            selectedCasing = "Все";
+            selectedDiameter = "Все";
+            selectedType = "Все";
+
+            // Скидаємо всі списки у відкритому вікні
             spinnerFilter1.setSelection(0);
             spinnerFilter2.setSelection(0);
             spinnerFilter3.setSelection(0);
@@ -365,7 +379,10 @@ public class ProductSelectionActivity extends AppCompatActivity {
             spinnerFilter5.setSelection(0);
             spinnerFilter6.setSelection(0);
 
-            productAdapter.updateList(allProducts);
+            // Показуємо весь каталог
+            productAdapter.updateList(
+                    new java.util.ArrayList<>(allProducts)
+            );
         });
 
         dialog.show();
@@ -384,6 +401,8 @@ public class ProductSelectionActivity extends AppCompatActivity {
             );
         }
     }
+
+
     private void applyFilters(
             String chimneyType,
             String grade,
@@ -397,34 +416,60 @@ public class ProductSelectionActivity extends AppCompatActivity {
 
         for (Product p : allProducts) {
 
+
+            String productType = p.getType();
+
+// Кронштейн: ігноруємо всі фільтри, крім типу елемента
+            if ("Кронштейн".equals(productType)) {
+
+                if (type.equals("Все") || type.equals("Кронштейн")) {
+                    filtered.add(p);
+                }
+
+                continue;
+            }
+
+// Розвантажувальна підставка: враховуємо тільки діаметр
+            if ("Розвантажувальна підставка".equals(productType)) {
+
+                boolean diameterMatches =
+                        diameter.equals("Все")
+                                || diameter.equals(p.getDiameter());
+
+                boolean typeMatches =
+                        type.equals("Все")
+                                || type.equals("Розвантажувальна підставка");
+
+                if (diameterMatches && typeMatches) {
+                    filtered.add(p);
+                }
+
+                continue;
+            }
+
+            // Звичайна фільтрація для решти товарів
             boolean ok = true;
 
-            // Тип димоходу
             if (!chimneyType.equals("Все")) {
                 ok &= chimneyType.equals(p.getChimneyType());
             }
 
-            // Марка нержавіючої сталі
             if (!grade.equals("Все")) {
                 ok &= p.getGrade() == Integer.parseInt(grade);
             }
 
-            // Товщина
             if (!thickness.equals("Все")) {
                 ok &= thickness.equals(p.getThickness());
             }
 
-            // Тип оболонки
             if (!casing.equals("Все")) {
                 ok &= casing.equals(p.getCasing());
             }
 
-            // Діаметр
             if (!diameter.equals("Все")) {
                 ok &= diameter.equals(p.getDiameter());
             }
 
-            // Тип елемента
             if (!type.equals("Все")) {
                 ok &= type.equals(p.getType());
             }
@@ -435,6 +480,28 @@ public class ProductSelectionActivity extends AppCompatActivity {
         }
 
         productAdapter.updateList(filtered);
+    }
+
+
+
+    private void setSpinnerSelection(
+            Spinner spinner,
+            String selectedValue
+    ) {
+        android.widget.SpinnerAdapter adapter =
+                spinner.getAdapter();
+
+        for (int i = 0; i < adapter.getCount(); i++) {
+
+            if (selectedValue.equals(
+                    adapter.getItem(i).toString()
+            )) {
+                spinner.setSelection(i);
+                return;
+            }
+        }
+
+        spinner.setSelection(0);
     }
     private void setSpinner(
             Spinner spinner,
