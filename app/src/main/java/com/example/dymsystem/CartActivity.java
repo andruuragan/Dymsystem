@@ -45,11 +45,32 @@ public class CartActivity extends AppCompatActivity {
     private EditText editCartDiscount;
     private EditText editCartInvoiceName;
 
+    private EditText editCartClient;
+    private String selectedClientName;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_cart);
+
+
+        if (getIntent().getBooleanExtra("start_new_invoice", false)) {
+            CartManager.getInstance().clear();
+        }
+
+        editCartClient = findViewById(R.id.editCartClient);
+
+        if (getIntent().getBooleanExtra("start_new_invoice", false)) {
+            selectedClientName = getIntent().getStringExtra("client_name");
+        }
+
+        if (selectedClientName != null) {
+            editCartClient.setText(selectedClientName);
+        }
+
+
 
         ImageButton buttonBackCart =
                 findViewById(R.id.buttonBackCart);
@@ -124,13 +145,15 @@ public class CartActivity extends AppCompatActivity {
 
         // Добавить товар
         buttonAddCartProduct.setOnClickListener(v -> {
-
             Intent intent = new Intent(
                     CartActivity.this,
                     ProductSelectionActivity.class
             );
 
+            intent.putExtra("opened_from_cart", true);
+
             startActivity(intent);
+
         });
 
         // Очистить корзину
@@ -235,6 +258,11 @@ public class CartActivity extends AppCompatActivity {
 
             updateCartTotal();
         }
+
+        if (selectedClientName != null && editCartClient != null) {
+            editCartClient.setText(selectedClientName);
+        }
+
     }
     private long saveInvoiceToDatabase() {
 
@@ -272,8 +300,7 @@ public class CartActivity extends AppCompatActivity {
         double total =
                 subtotal - (subtotal * discount / 100);
 
-        EditText editCartClient =
-                findViewById(R.id.editCartClient);
+        // Используем поле класса editCartClient
 
         String client =
                 editCartClient.getText().toString().trim();
@@ -514,8 +541,7 @@ public class CartActivity extends AppCompatActivity {
             );
 
             // Клиент
-            EditText editCartClient =
-                    findViewById(R.id.editCartClient);
+
 
             String client =
                     editCartClient

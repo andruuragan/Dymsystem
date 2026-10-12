@@ -88,6 +88,17 @@ public class ClientAdapter
         } else {
 
             // Обычный клиент
+            holder.buttonCreateInvoice.setVisibility(View.VISIBLE);
+
+            holder.buttonCreateInvoice.setOnClickListener(v -> {
+                Intent intent = new Intent(context, CartActivity.class);
+
+                intent.putExtra("start_new_invoice", true);
+                intent.putExtra("client_id", client.getId());
+                intent.putExtra("client_name", client.getName());
+
+                context.startActivity(intent);
+            });
 
             holder.buttonEditClient.setVisibility(
                     View.VISIBLE
@@ -213,6 +224,7 @@ public class ClientAdapter
 
         TextView textClientName;
         TextView textClientPhone;
+        ImageButton buttonCreateInvoice;
 
         ImageButton buttonViewClient;
         ImageButton buttonEditClient;
@@ -232,6 +244,8 @@ public class ClientAdapter
                     itemView.findViewById(
                             R.id.textClientPhone
                     );
+            buttonCreateInvoice =
+                    itemView.findViewById(R.id.buttonCreateInvoice);
 
             buttonViewClient =
                     itemView.findViewById(

@@ -77,13 +77,22 @@ public class ProductSelectionActivity extends AppCompatActivity {
             buttonCart.setVisibility(View.GONE);
         }
         buttonCart.setOnClickListener(v -> {
+            boolean openedFromCart = getIntent()
+                    .getBooleanExtra("opened_from_cart", false);
 
-            Intent intent = new Intent(
-                    ProductSelectionActivity.this,
-                    CartActivity.class
-            );
+            if (openedFromCart) {
+                // Возвращаемся к уже открытой накладной
+                finish();
+            } else {
+                // Обычный переход в корзину из каталога
+                Intent intent = new Intent(
+                        ProductSelectionActivity.this,
+                        CartActivity.class
+                );
 
-            startActivity(intent);
+                startActivity(intent);
+            }
+
         });
         MaterialButton buttonFilter = findViewById(R.id.buttonFilter);
 

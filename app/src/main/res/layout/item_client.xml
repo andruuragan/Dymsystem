@@ -43,6 +43,15 @@
         </LinearLayout>
 
         <ImageButton
+            android:id="@+id/buttonCreateInvoice"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Создать накладную"
+            android:src="@drawable/ic_add" />
+
+
+        <ImageButton
             android:id="@+id/buttonViewClient"
             android:layout_width="44dp"
             android:layout_height="44dp"
