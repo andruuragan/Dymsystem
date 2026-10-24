@@ -304,6 +304,7 @@ public class ProductSelectionActivity extends AppCompatActivity {
                 "Стіновий хомут",
                 "Монтажний хомут",
                 "Конус",
+                "Зворотний конус",
                 "Термоґрибок",
                 "Дека",
                 "Заглушка",
